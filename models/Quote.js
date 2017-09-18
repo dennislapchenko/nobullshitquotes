@@ -3,7 +3,12 @@ const { Schema } = mongoose;
 
 const quoteSchema = new Schema({
 	quote: String,
-	createdDateTime: Date
+	author: String,
+	source: String,
+	year: String,
+	verified: Boolean,
+	createdDateTime: Date,
+	updatedDateTime: Date
 });
 
 mongoose.model("quotes", quoteSchema);
