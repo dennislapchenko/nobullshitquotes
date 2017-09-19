@@ -10,6 +10,7 @@ mongoose.connect(keys.mongoURI);
 //app.use are middleware that preprocesses requests before they get to handlers
 
 require("./routes/quoteRoutes")(app); //to pass 'app' object to routes to assign route binds
+require("./routes/rootRoutes")(app); //to pass 'app' object to routes to assign route binds
 
 const PORT = process.env.PORT || 2000; //get port for Heroku's config or use default
 app.listen(PORT);

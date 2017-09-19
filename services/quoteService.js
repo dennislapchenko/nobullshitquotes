@@ -3,6 +3,13 @@ const mongoose = require("mongoose");
 const Quote = mongoose.model("quotes");
 
 module.exports.getDailyQuote = () => {
+	Quote.find({}, 'quote', function(err, quotes){
+	        if(err){
+	        	return false;
+	        } else{
+	        	return quotes;
+	        }
+	 });
 };
 
 module.exports.addNewQuote = async (qt) => {
