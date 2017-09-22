@@ -1,23 +1,22 @@
 const mongoose = require("mongoose");
-
 const Quote = mongoose.model("quotes");
 
-module.exports.getDailyQuote = () => {
-	Quote.find({}, 'quote', function(err, quotes){
-	        if(err){
-	        	return false;
-	        } else{
-	        	return quotes;
-	        }
-	 });
+module.exports.getRecentQuotes = () => {
+	const recentQuotes = Quote.find({});
+
+	if(recentQuotes) {
+		return recentQuotes;
+	} else {
+		return false;
+	}
 };
 
 module.exports.addNewQuote = async (qt) => {
 	console.log("Saving new quote");
 	const existingQuote = await Quote.findOne({quote: qt});
-
+	
 	if(existingQuote) {
-		console.log("quote already exists");
+		console.log("quote already existss");
 		return false;
 	}
 	
