@@ -1,27 +1,37 @@
 const quoteService = require("../services/quoteService");
-const mongoose = require("mongoose");
-
-const Quote = mongoose.model("quotes");
+const arrayHelper = require("../typeExtensions/array");
 
 module.exports = app => {
-	app.get("/api/quotes", (req, res) => {
-		const quotes = quoteService.getDailyQuotes();
-		if(!quotes) {
+	app.get("/api/quotes", async (req, res) => {
+		const quotes = await quoteService.getRecentQuotes();
+
+		if(quotes.length > 0) {
+			res.status(200).send({ quotes: quotes.map(q => q.quote)});
+		} else {
 			console.log("Found no quotes");
 			res.redirect("/");
+		}
+	});
+
+	app.get("/api/quotes/daily", async (req, res) => {
+		const quotes = await quoteService.getRecentQuotes();
+		console.log("quoteRoutes: Found "+ quotes.length + " quotes");
+
+		if(quotes.length > 0) {
+			res.status(200).send({dailyQuote: arrayHelper.getRandom(quotes)});
 		} else {
-			res.status(200).send({ quotes: quotes.map(q => q.quote)});
+			console.log("Found no quotes");
+			res.redirect("/");
 		}
 	});
 	
-
-	app.get("/api/quotes/:quote", (req, res) => {
+	app.get("/api/quotes/:quote", async (req, res) => {
 		const newQuote = req.params.quote;
 
 		if(newQuote == undefined) {
 			res.status(400).send({ error: "Query parameter 'value' was missing"});
 		} else {
-			const success = quoteService.addNewQuote(newQuote);
+			const success = await quoteService.addNewQuote(newQuote);
 			console.log(success);
 			if(success) {
 				res.status(200).send({result: "Successfully added new quote"});	
