@@ -13,13 +13,23 @@ module.exports.getRecentQuotes = () => {
 
 module.exports.addNewQuote = async (qt) => {
 	console.log("Saving new quote");
-	const existingQuote = await Quote.findOne({quote: qt});
+	const existingQuote = await Quote.findOne({quote: qt.quote});
 	
 	if(existingQuote) {
 		console.log("quote already existss");
 		return false;
 	}
 	
-	const newQuote = await new Quote({quote: qt, createdDateTime: new Date()}).save();
+	const newQuote = await new Quote({
+		quote: qt.quote,
+		author: qt.author,
+		source: qt.source,
+		year: qt.year,
+		addedBy: qt.addedBy,
+		tags: qt.tags,
+		verified: true,
+		createdDateTime: new Date(),
+		updatedDateTime: new Date()
+	}).save();
 	return true;
 };

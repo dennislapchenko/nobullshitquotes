@@ -4,24 +4,34 @@ import {GET_RECENT_QUOTES_ENDPOINT, GET_DAILY_QUOTE_ENDPOINT, POST_NEW_QUOTE_END
 
 //these action creators become 'this.props.{actionCreator}' when wired inside React-Components (connect(null, actions)))(Component)
 
-export const fetchDailyQuote = () => async dispatch => {
+export const getDailyQuote = () => async dispatch => {
 	const res = await axios.get(GET_DAILY_QUOTE_ENDPOINT);
 	
 	dispatch({type: GET_DAILY_QUOTE, payload: res.data});
 };
 
-export const fetchRecentQuotes = () => async dispatch => {
+export const getRecentQuotes = () => async dispatch => {
 	const res = await axios.get(GET_RECENT_QUOTES_ENDPOINT);
 	
 	dispatch({type: GET_RECENT_QUOTES, payload: res.data});
 };
 
-export const postNewQuote = (form) => async dispatch => {
-	console.log(form);
-	form.preventDefault();
-	const data = new new FormData(form.target);
-	console.log(data);
-	const res = await axios.post(POST_NEW_QUOTE_ENDPOINT, data);
+export const postNewQuote = (event) => async dispatch => {
+	event.preventDefault();
+
+	const form = new FormData(event.target);
+	const payload = {
+		quote: form.get("quote"),
+		tags: form.get("tags").split(","),
+		author: form.get("author"),
+		source: form.get("source"),
+		year: form.get("year"),
+		addedBy: form.get("addedBy")
+	};
+	//TODO: JSON.stringify(form).serializeArray() - throws an error for some reason.
+	//fix this form creation
+	console.log(payload);
+	const res = await axios.post(POST_NEW_QUOTE_ENDPOINT, payload);
 	
 	dispatch({type: POST_NEW_QUOTE, payload: res.data});
 };

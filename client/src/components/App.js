@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route } from "react-router-dom"; //BrowserRouter says how to behave. looks at url and shows components
+import { BrowserRouter } from "react-router-dom"; //BrowserRouter says how to behave. looks at url and shows components
 import {connect} from "react-redux";
 import * as actions from "../actions";
 
@@ -11,21 +11,24 @@ import RecentQuotes from "./RecentQuotes"
 class App extends React.Component {
 
 	componentDidMount() {
-		this.props.fetchDailyQuote();
+		this.props.getDailyQuote();
 	}
-
 
 	render() {
 		return (
-		  <div>
+		  <div style={{backgroundColor:"#8c8c8c"}}>
 		  	<BrowserRouter>
 		  		<div className="container">
 		  			<Header />
-		  			<NewQuoteForm />
-		  			
-		  			<div className="right">
-		  				<RecentQuotes />
-		  			</div>
+		  			<br/>
+		  			<div className="row">
+  						<div className="col s6">
+  							<RecentQuotes />
+  						</div>
+  						<div className="col s6">
+  							<NewQuoteForm />
+  						</div>
+		  			</div>  					
 		  		</div>
 		  	</BrowserRouter>
 		  </div>

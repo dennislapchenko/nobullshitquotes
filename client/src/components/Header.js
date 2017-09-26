@@ -4,7 +4,6 @@ import {Link} from "react-router-dom";
 
 class Header extends Component {
 	renderQuote(){
-		console.log(this.props.quotes);
 		switch(this.props.quotes) {
 			case null:
 				return;
@@ -13,10 +12,10 @@ class Header extends Component {
 		}
 	}
 
-	render() 
-{		return (
+	render() {	
+		return (
 			<nav>
-				<div className="nav-wrapper z-depth-3">
+				<div className="nav-wrapper cyan z-depth-2">
 					<Link 
 						to="/" 
 						className="left brand-logo">
