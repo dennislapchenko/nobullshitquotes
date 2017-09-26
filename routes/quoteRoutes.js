@@ -1,5 +1,5 @@
 const quoteService = require("../services/quoteService");
-const arrayHelper = require("../typeExtensions/array");
+const arrayHelper = require("../utils/arrayUtils");
 
 module.exports = app => {
 	app.get("/api/quotes", async (req, res) => {
@@ -25,18 +25,19 @@ module.exports = app => {
 		}
 	});
 	
-	app.get("/api/quotes/:quote", async (req, res) => {
-		const newQuote = req.params.quote;
+	app.post("/api/quotes", async (req, res) => {
+		const payload = req.body;
+		console.log(payload);
 
-		if(newQuote == undefined) {
-			res.status(400).send({ error: "Query parameter 'value' was missing"});
+		if(payload.quote == undefined) {
+			res.status(400).send({ error: "Payload had fields missing"});
 		} else {
-			const success = await quoteService.addNewQuote(newQuote);
+			const success = await quoteService.addNewQuote(payload.quote);
 			console.log(success);
 			if(success) {
 				res.status(200).send({result: "Successfully added new quote"});	
 			} else {
-				res.status(400).send({error: "Quote already exists"});
+				res.status(409).send({error: "Quote already exists"});
 			}
 		}
 	});

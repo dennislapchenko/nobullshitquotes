@@ -5,6 +5,8 @@ import * as actions from "../actions";
 
 
 import Header from "./Header";
+import NewQuoteForm from "./NewQuoteForm";
+import RecentQuotes from "./RecentQuotes"
 
 class App extends React.Component {
 
@@ -14,15 +16,20 @@ class App extends React.Component {
 
 
 	render() {
-	return (
-	  <div>
-	  	<BrowserRouter>
-	  		<div className="container">
-	  			<Header />
-	  		</div>
-	  	</BrowserRouter>
-	  </div>
-	);
+		return (
+		  <div>
+		  	<BrowserRouter>
+		  		<div className="container">
+		  			<Header />
+		  			<NewQuoteForm />
+		  			
+		  			<div className="right">
+		  				<RecentQuotes />
+		  			</div>
+		  		</div>
+		  	</BrowserRouter>
+		  </div>
+		);
 	}
 };
 

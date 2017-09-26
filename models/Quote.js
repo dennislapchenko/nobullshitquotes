@@ -6,6 +6,7 @@ const quoteSchema = new Schema({
 	author: String,
 	source: String,
 	year: String,
+	addedBy: String,
 	tags: Array,
 	verified: Boolean,
 	createdDateTime: Date,

@@ -9,7 +9,7 @@ class Header extends Component {
 			case null:
 				return;
 			default:
-				return (<span><strong>Quote of the day: {this.props.quotes}</strong></span>);
+				return (<span><strong>Quote of the day: {this.props.quotes.dailyQuote.quote}</strong></span>);
 		}
 	}
 
