@@ -4,11 +4,12 @@ import {Link} from "react-router-dom";
 
 class Header extends Component {
 	renderQuote(){
-		switch(this.props.quotes) {
+		switch(this.props.randomQuote) {
 			case null:
 				return;
 			default:
-				return (<span><strong>Quote of the day: {this.props.quotes.dailyQuote.quote}</strong></span>);
+				const quote = this.props.randomQuote.dailyQuote;
+				return (<span>Quote of the day:<strong> {quote.quote} {quote.author ? "--"+quote.author : ""}</strong></span>);
 		}
 	}
 
@@ -30,8 +31,8 @@ class Header extends Component {
 	}
 }
 
-function mapStateToProps({quotes}) {
-	return {quotes};
+function mapStateToProps({randomQuote}) {
+	return {randomQuote};
 }
 
 export default connect(mapStateToProps)(Header);

@@ -12,16 +12,14 @@ class NewQuoteForm extends Component {
 		}
 	}
 
-	onClickMoreFields(button) {
+	onClickMoreFields() {
 		this.setState({
 			displayMoreFields: !this.state.displayMoreFields,
 			moreFieldsText: this.state.displayMoreFields ? "More Fields" : "Less Fields"
 		});
-		console.log(button)
 	}
 
 	onClickSubmit() {
-
 	}
 
 	render() {
@@ -31,9 +29,9 @@ class NewQuoteForm extends Component {
 				<form id="newQuote" onSubmit={this.props.postNewQuote}>
 					{this.renderMainFormFields()}
 
-					{this.state.displayMoreFields ? this.renderAdditionalFormFields(): ""}
+					{this.state.displayMoreFields ? this.renderAdditionalFormFields() : ""}
 					<div className="row">
-						<a onClick={() => this.onClickMoreFields(this)} className="orange btn-flat center white-text col s6 hoverable">
+						<a onClick={() => this.onClickMoreFields(this)} className="orange btn-flat center white-text col s6">
 							{this.state.moreFieldsText}
 						</a>
 						<button type="submit" className="teal btn-flat white-text col s6" onClick={() => this.onClickSubmit()}>
@@ -64,4 +62,8 @@ class NewQuoteForm extends Component {
 	}
 }
 
-export default connect(null, {postNewQuote})(NewQuoteForm);
+function mapStateToProps({isNewQuotePosted}) {
+	return {isNewQuotePosted};
+}
+
+export default connect(mapStateToProps, {postNewQuote})(NewQuoteForm);

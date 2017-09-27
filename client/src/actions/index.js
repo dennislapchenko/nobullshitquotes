@@ -11,15 +11,14 @@ export const getDailyQuote = () => async dispatch => {
 };
 
 export const getRecentQuotes = () => async dispatch => {
-	const res = await axios.get(GET_RECENT_QUOTES_ENDPOINT);
-	
-	dispatch({type: GET_RECENT_QUOTES, payload: res.data});
+	fetchAndDispatchRecentQuotes(dispatch);
 };
 
 export const postNewQuote = (event) => async dispatch => {
 	event.preventDefault();
 
-	const form = new FormData(event.target);
+	const htmlForm = event.target;
+	const form = new FormData(htmlForm);
 	const payload = {
 		quote: form.get("quote"),
 		tags: form.get("tags").split(","),
@@ -30,10 +29,22 @@ export const postNewQuote = (event) => async dispatch => {
 	};
 	//TODO: JSON.stringify(form).serializeArray() - throws an error for some reason.
 	//fix this form creation
-	console.log(payload);
+
 	const res = await axios.post(POST_NEW_QUOTE_ENDPOINT, payload);
+
+	if(res.status === 200) {
+		fetchAndDispatchRecentQuotes(dispatch);
+		htmlForm.reset();
+	}
+
+	alert(res.statusText);
 	
-	dispatch({type: POST_NEW_QUOTE, payload: res.data});
+	dispatch({type: POST_NEW_QUOTE, status: res.status});
 };
+
+const fetchAndDispatchRecentQuotes = async (dispatch) => {
+	const res = await axios.get(GET_RECENT_QUOTES_ENDPOINT);
+	dispatch({type: GET_RECENT_QUOTES, payload: res.data});
+}
 
 //reducers are eating these dispatched signals

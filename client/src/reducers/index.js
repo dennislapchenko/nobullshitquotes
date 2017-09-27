@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import quoteReducer from "./quoteReducer";
-import recentQuotesReducer from "./recentQuotesReducer"
+import {randomQuote, recentQuotes, isNewQuotePosted} from "./quoteReducer";
 
 export default combineReducers({
-	quotes: quoteReducer,
-	recentQuotes: recentQuotesReducer
+	randomQuote,
+	recentQuotes,
+	isNewQuotePosted
 });
